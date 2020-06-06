@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Data
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name="section")
+@Table(name="section", schema = "public")
 public class Section {
 
     @Id

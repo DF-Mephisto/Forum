@@ -26,3 +26,8 @@
     color: yellow;
     cursor: pointer;
 }
+
+.log {
+    position: absolute;
+    right: 0px;
+}
