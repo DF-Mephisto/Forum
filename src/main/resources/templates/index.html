@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Forum</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/forum.css}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body th:style="${'background-image:url(/images/forumBack.jpg); background-attachment: fixed;'}">
+
+<ul class="liref">
+    <li><a href="/">Main</a></li>
+</ul>
+
+<section class="main_frame">
+    <div class="topic_body">
+        <h3 style="font-family: Arial"><b>Forum</b></h3>
+        <hr>
+        <div class="noContent" th:if="${#lists.isEmpty(sections)}">No content</div>
+    </div>
+</section>
+
+
+
+</body>
+</html>

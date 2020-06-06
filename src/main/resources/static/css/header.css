@@ -1,0 +1,28 @@
+.liref {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url(../images/header.jpg), fixed;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.liref li {
+    float: left;
+}
+
+.liref li  a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.liref li a:hover {
+    color: yellow;
+    cursor: pointer;
+}

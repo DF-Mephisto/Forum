@@ -1,0 +1,22 @@
+.main_frame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.topic_body {
+    width: 80%;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+}
+
+.topic_body hr {
+    border-top: 1px solid wheat;
+}
+
+.noContent {
+    font-size: 20px;
+    font-family: Arial;
+}
