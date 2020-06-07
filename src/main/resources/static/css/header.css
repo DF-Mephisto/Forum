@@ -30,4 +30,23 @@
 .log {
     position: absolute;
     right: 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.log_btn {
+    display: block;
+    height: 50px;
+    border: none;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    margin:0px;
+    padding:16px;
+}
+
+.log_btn:hover {
+    cursor: pointer;
+    color: yellow;
 }

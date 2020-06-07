@@ -21,18 +21,20 @@ import java.util.Date;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @NotBlank
+    @NotBlank(message = "Can't be empty")
     @Size(min=1, max=20, message = "Name must be between 1 and 20 length long")
     String username;
 
-    @NotBlank
+    @NotBlank(message = "Can't be empty")
     @Size(min=6, max=20, message = "Password must be between 6 and 20 length long")
     String password;
 
     String role;
+
+    @Column(name="registrationdate")
     Date registrationDate;
     byte[] avatar;
 

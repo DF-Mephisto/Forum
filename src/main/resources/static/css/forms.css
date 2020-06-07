@@ -1,0 +1,87 @@
+.error {
+    color: red;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.reg_form_body {
+    width: 50%;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+}
+
+.reg_form_body hr {
+    border-top: 1px dotted wheat;
+}
+
+.text_field {
+    padding: 5px;
+    width: 100%;
+}
+
+.btn {
+    border: 1px solid gray;
+    padding: 10px;
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+}
+
+.btn:hover {
+    color: yellow;
+    cursor: pointer;
+    border: 1px solid white;
+}
+
+.btn_cont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.inputfile {
+    display: none;
+}
+
+.ava_cont {
+    display: block;
+    width: 100px;
+    height: 100px;
+    border: 1px solid white;
+    z-index: 0;
+    position: relative;
+}
+
+.ava_cont:hover:before{
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    cursor: pointer;
+    content: "";
+}
+
+.ava_cont:hover:after{
+    content: 'choose a file';
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    top: calc(50% - 10px);
+    z-index: 2;
+    cursor: pointer;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
