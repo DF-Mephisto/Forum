@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Forum</title>
     <link rel="stylesheet" th:href="@{/css/header.css}">
-    <link rel="stylesheet" th:href="@{/css/forum.css}">
+    <link rel="stylesheet" th:href="@{/css/userPage.css}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -35,10 +35,26 @@
 </ul>
 
 <section class="main_frame">
-    <div class="topic_body">
-        <h3 style="font-family: Arial"><b>Forum</b></h3>
-        <hr>
-        <div class="noContent" th:if="${#lists.isEmpty(sections)}">No content</div>
+    <div class="user-body">
+
+        <div class="user-ava-cont">
+            <img class="user-ava" th:if="${user.getImageStr() != ''}" th:src="${user.getImageStr()}" alt="avatar" />
+            <img class="user-ava" th:unless="${user.getImageStr() != ''}" src="/images/baseAva.png" alt="avatar" />
+        </div>
+
+        <h2 class="user-name-cont">
+            <b th:text="${user.username}"></b>
+            <div class="user-role" th:if="${user.role == 'ROLE_USER'}">user</div>
+            <div class="user-role" th:if="${user.role == 'ROLE_ADMIN'}">administrator</div>
+        </h2>
+
+        <h3>Registration date:</h3>
+        <div th:text="${regDate}"></div>
+
+        <h3>Additional Information:</h3>
+        <div th:if="${user.information != ''}" th:text="${user.information}"></div>
+        <div th:unless="${user.information != ''}">User hasn't left any information</div>
+
     </div>
 </section>
 

@@ -34,6 +34,9 @@ public class User implements UserDetails {
 
     String role;
 
+    @Size(max=1000, message = "Information must be not bigger than 1000 length long")
+    String information = "";
+
     @Column(name="registrationdate")
     Date registrationDate;
     byte[] avatar;

@@ -7,7 +7,7 @@ window.onload = function()
 function addAvatarInputListener(input){
     input.addEventListener('change', function(e){
         const selectedFile = e.target.files[0];
-        //alert(selectedFile.name);
+
         document.getElementById("ava").src = URL.createObjectURL(selectedFile);
 
     }, false);
