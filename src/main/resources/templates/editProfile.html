@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Forum</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/userPage.css}">
+    <link rel="stylesheet" th:href="@{/css/controls.css}">
+    <link rel="stylesheet" th:href="@{/css/forms.css}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script th:src="@{/js/changeAvatar.js}"></script>
+</head>
+<body th:style="${'background-image:url(/images/forumBack.jpg); background-attachment: fixed;'}">
+
+<ul class="liref">
+    <li><a href="/">Main</a></li>
+
+    <div class="log">
+        <li sec:authorize="!isAuthenticated()"><a href="/login">Sign in</a></li>
+
+        <li sec:authorize="isAuthenticated()">
+            <button class="dropdown">
+                <img th:if="${userImg != ''}" th:src="${userImg}" alt="avatar" />
+                <img th:unless="${userImg != ''}" src="/images/baseAva.png" alt="avatar" />
+                <i class="fa fa-caret-down"></i>
+
+                <form class="dropdown-content" method="post" th:action="@{/logout}">
+                    <a class="dropdown-link" th:href="@{/profile/{username}(username=${#authentication.getName()})}">Profile</a>
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    <input class="logout_btn" type="submit" value="Logout">
+                </form>
+            </button>
+        </li>
+    </div>
+</ul>
+
+<section class="main_frame">
+    <div class="user-body">
+
+        <form method="post" enctype="multipart/form-data" th:object="${editForm}">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+
+            <input class="inputfile" id="avatar" type="file" accept="image/*" name="avatarImg">
+
+            <div class="hor-center">
+                <label class="ava_cont" for="avatar">
+                    <img id="ava" class="avatar" th:if="${userImg != ''}" th:src="${userImg}" alt="avatar">
+                    <img id="ava" class="avatar" th:unless="${userImg != ''}" src="/images/baseAva.png" alt="avatar">
+                </label>
+            </div>
+            <span class="error" th:if="${#fields.hasErrors('avatar')}" th:errors="*{avatar}"></span>
+
+            <h2 class="user-name-cont">
+                <b th:text="${#authentication.getName()}"></b>
+            </h2>
+
+            <h3>Old password: </h3>
+            <input class="text_field" type="password" th:field="*{oldPassword}" placeholder="Old password">
+            <span class="error" th:if="${#fields.hasErrors('oldPassword')}" th:errors="*{oldPassword}"></span>
+
+            <h3>New password: </h3>
+            <input class="text_field" type="password" th:field="*{password}" placeholder="New password">
+            <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+
+            <h3>Additional Information: </h3>
+            <textarea class="text-area" th:field="*{information}" rows="5" cols="50" placeholder="User hasn't left any information"></textarea>
+            <span class="error" th:if="${#fields.hasErrors('information')}" th:errors="*{information}"></span>
+
+            <br><br>
+            <div class="hor-center">
+                <button class="btn">Save</button>
+            </div>
+        </form>
+
+    </div>
+</section>
+
+
+
+</body>
+</html>

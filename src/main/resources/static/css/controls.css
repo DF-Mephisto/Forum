@@ -1,0 +1,19 @@
+.btn {
+    border: 1px solid gray;
+    padding: 10px;
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+}
+
+.btn:hover {
+    color: yellow;
+    cursor: pointer;
+    border: 1px solid white;
+}
+
+.hor-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -1,6 +1,6 @@
 window.onload = function()
 {
-    var input = document.querySelector('.inputfile');
+    let input = document.querySelector('.inputfile');
     addAvatarInputListener(input);
 }
 

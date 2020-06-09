@@ -20,18 +20,10 @@
     width: 100%;
 }
 
-.btn {
-    border: 1px solid gray;
-    padding: 10px;
-    text-decoration: none;
-    background-color: rgba(0, 0, 0, 0);
-    color: white;
-}
-
-.btn:hover {
-    color: yellow;
-    cursor: pointer;
-    border: 1px solid white;
+.text-area {
+    padding: 5px;
+    width: 100%;
+    resize: none;
 }
 
 .btn_cont {
@@ -47,8 +39,8 @@
 
 .ava_cont {
     display: block;
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
     border: 1px solid white;
     z-index: 0;
     position: relative;
@@ -71,7 +63,6 @@
     content: 'choose a file';
     position: absolute;
     text-align: center;
-    top: 0;
     left: 0;
     width: 100%;
     height: 100%;

@@ -7,6 +7,7 @@
     <title>Forum</title>
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/userPage.css}">
+    <link rel="stylesheet" th:href="@{/css/controls.css}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -52,8 +53,12 @@
         <div th:text="${regDate}"></div>
 
         <h3>Additional Information:</h3>
-        <div th:if="${user.information != ''}" th:text="${user.information}"></div>
-        <div th:unless="${user.information != ''}">User hasn't left any information</div>
+        <div class="info" th:if="${user.information != ''}" th:text="${user.information}"></div>
+        <div class="info" th:unless="${user.information != ''}">User hasn't left any information</div>
+
+        <div class="hor-center" th:if="${#authorization.expression('isAuthenticated()')} and ${user.id} == ${#authentication.getPrincipal().getId()}">
+            <a class="btn" href="/profile/edit">Edit profile</a>
+        </div>
 
     </div>
 </section>
