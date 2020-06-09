@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/forum.css}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body th:style="${'background-image:url(/images/forumBack.jpg); background-attachment: fixed;'}">
 
@@ -17,10 +18,19 @@
     <div class="log">
         <li sec:authorize="!isAuthenticated()"><a href="/login">Sign in</a></li>
 
-        <li sec:authorize="isAuthenticated()"><form method="post" th:action="@{/logout}">
-            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-            <button class="log_btn">Logout</button>
-        </form></li>
+        <li sec:authorize="isAuthenticated()">
+            <button class="dropdown">
+                <img th:if="${userImg != ''}" th:src="${userImg}" alt="avatar" />
+                <img th:unless="${userImg != ''}" src="/images/baseAva.png" alt="avatar" />
+                <i class="fa fa-caret-down"></i>
+
+                <form class="dropdown-content" method="post" th:action="@{/logout}">
+                    <a class="dropdown-link" href="/profile">Profile</a>
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    <input class="logout_btn" type="submit" value="Logout">
+                </form>
+            </button>
+        </li>
     </div>
 </ul>
 

@@ -2,7 +2,6 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
     background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url(../images/header.jpg), fixed;
     height: 50px;
     display: flex;
@@ -35,7 +34,7 @@
     align-items: center;
 }
 
-.log_btn {
+.dropdown {
     display: block;
     height: 50px;
     border: none;
@@ -43,10 +42,58 @@
     background-color: rgba(0, 0, 0, 0);
     color: white;
     margin:0px;
-    padding:16px;
+    padding: 0px 20px;
 }
 
-.log_btn:hover {
+.dropdown:hover {
+    color: yellow;
+}
+
+.dropdown img {
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 100%;
+    border: 2px solid red;
+    overflow: hidden;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0px;
+    background-color: black;
+    color: white;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-link {
+    float: none;
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.logout_btn {
+    display: block;
+    border: none;
+    text-align: center;
+    background-color: black;
+    color: white;
+    margin:0px;
+    padding: 12px 16px;
+    width: 100%;
+}
+
+.logout_btn:hover {
     cursor: pointer;
     color: yellow;
 }
