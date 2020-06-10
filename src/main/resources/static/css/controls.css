@@ -6,15 +6,23 @@
     color: white;
 }
 
-.create-btn {
-    margin: 10px;
-    display: none;
-}
-
 .btn:hover {
     color: yellow;
     cursor: pointer;
     border: 1px solid white;
+}
+
+.btn-dis {
+    border: 1px solid gray;
+    padding: 10px;
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0);
+    color: gray;
+}
+
+.create-btn {
+    margin: 10px;
+    display: none;
 }
 
 .hor-center {

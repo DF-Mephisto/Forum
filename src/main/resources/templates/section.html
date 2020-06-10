@@ -38,28 +38,31 @@
 
 <section class="main_frame">
     <div class="topic_body">
-        <h3 class="title">Forum</h3>
+        <h3 class="title" th:text="${section.name}"></h3>
         <hr>
 
-        <div class="create-topic" sec:authorize="hasRole('ADMIN')">
-            <form method="post" th:object="${newSection}">
+        <div class="create-topic" sec:authorize="isAuthenticated()">
+            <form method="post" th:object="${newTopic}">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}">
 
-                <h4>Create section </h4>
-                <textarea class="create-topic-input" rows="1" th:field="*{name}" placeholder="What is a general theme?"></textarea>
+                <h4>Create topic </h4>
+                <textarea class="create-topic-input" rows="1" th:field="*{name}" placeholder="What do you want to discuss?"></textarea>
                 <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+                <textarea class="create-topic-input create-comment" id="create-comment" rows="1" th:field="*{text}" placeholder="Put your comment here"></textarea>
+                <span class="error" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></span>
 
                 <div class="hor-center">
                     <button class="btn-dis create-btn" id="create-btn">Create</button>
                 </div>
             </form>
         </div>
-        <hr sec:authorize="hasRole('ADMIN')">
+        <hr sec:authorize="isAuthenticated()">
 
-        <div class="noContent" th:if="${#lists.isEmpty(sections)}">No content</div>
+        <div class="noContent" th:if="${#lists.isEmpty(topics)}">No content</div>
 
-        <div th:each="section: ${sections}">
-            <a class="topic-link" th:href="@{/section/{id}(id=${section.id})}" th:text="${section.name}"></a>
+        <div th:each="topic: ${topics}">
+            <a class="topic-link" th:href="@{/topic/{id}(id=${topic.id})}" th:text="${topic.name}"></a>
             <hr>
         </div>
     </div>

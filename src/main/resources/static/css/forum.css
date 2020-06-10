@@ -2,6 +2,11 @@
     color: red;
 }
 
+.title {
+    font-family: Arial;
+    font-weight: bold;
+}
+
 .main_frame {
     display: flex;
     flex-direction: column;
@@ -32,13 +37,17 @@
     color: white;
 }
 
-.create-topic {
+.create-topic-input {
     background-color: rgba(0, 0, 0, 0.9);
     padding: 5px;
     width: 100%;
     color: white;
     border: none;
     resize: none;
+}
+
+.create-comment {
+    display: none;
 }
 
 .topic-link {

@@ -3,10 +3,11 @@ package forum.web;
 import forum.entity.Section;
 import forum.entity.User;
 import forum.repository.SectionRepository;
+import forum.service.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,37 +19,35 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
-@ConfigurationProperties(prefix = "forum")
 public class HomeController {
 
     private SectionRepository secRepo;
-
-    private int pageSize = 1;
-
-    public void setPageSize(int pageSize)
-    {
-        this.pageSize = pageSize;
-    }
+    private Properties props;
 
     @Autowired
-    public HomeController(SectionRepository secRepo)
+    public HomeController(SectionRepository secRepo, Properties props)
     {
         this.secRepo = secRepo;
+        this.props = props;
     }
 
-    @ModelAttribute(name="userImg")
-    public String userImg(@AuthenticationPrincipal User user)
+    @ModelAttribute
+    public void addAttributes(@RequestParam(value = "page", defaultValue = "0") int page,
+                              @AuthenticationPrincipal User user,
+                              Model model)
     {
-        return user == null ? "" : user.getImageStr();
+        Pageable pageable = PageRequest.of(page, props.getTopicsCount(),
+                Sort.by(Sort.Direction.ASC, "placedAt"));
+        List<Section> sections = secRepo.findAll(pageable);
+        model.addAttribute("sections", sections);
+
+        String userImg = user == null ? "" : user.getImageStr();
+        model.addAttribute("userImg", userImg);
     }
 
     @GetMapping
-    public String getHomePage(@RequestParam(value = "page", defaultValue = "0") int page,
-                       Model model)
+    public String getHomePage(Model model)
     {
-        Pageable pageable = PageRequest.of(page, pageSize);
-        List<Section> sections = secRepo.findAll(pageable);
-        model.addAttribute("sections", sections);
         model.addAttribute("newSection", new Section());
 
         return "index";
