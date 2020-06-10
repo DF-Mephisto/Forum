@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 public class EditProfileForm {
 
     @NotBlank(message = "Can't be empty")
-    @Size(min=6, max=20, message = "Password must be between 6 and 20 length long")
+    @Size(min=4, max=20, message = "Password must be between 4 and 20 length long")
     String password;
 
     String oldPassword;

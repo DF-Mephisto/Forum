@@ -29,7 +29,7 @@ public class User implements UserDetails {
     String username;
 
     @NotBlank(message = "Can't be empty")
-    @Size(min=6, max=20, message = "Password must be between 6 and 20 length long")
+    @Size(min=4, max=20, message = "Password must be between 4 and 20 length long")
     String password;
 
     String role;

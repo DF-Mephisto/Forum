@@ -46,7 +46,7 @@
         <h2 class="user-name-cont">
             <b th:text="${user.username}"></b>
             <div class="user-role" th:if="${user.role == 'ROLE_USER'}">user</div>
-            <div class="user-role" th:if="${user.role == 'ROLE_ADMIN'}">administrator</div>
+            <div class="admin-role" th:if="${user.role == 'ROLE_ADMIN'}">administrator</div>
         </h2>
 
         <h3>Registration date:</h3>

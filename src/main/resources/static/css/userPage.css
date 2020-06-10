@@ -35,6 +35,11 @@
     font-size: 18px;
 }
 
+.admin-role {
+    font-size: 18px;
+    color: red;
+}
+
 .info {
     white-space: pre-wrap;
 }
