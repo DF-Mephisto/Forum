@@ -6,6 +6,11 @@
     color: white;
 }
 
+.create-btn {
+    margin: 10px;
+    display: none;
+}
+
 .btn:hover {
     color: yellow;
     cursor: pointer;

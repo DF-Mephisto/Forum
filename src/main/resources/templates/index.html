@@ -10,6 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/controls.css}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script th:src="@{/js/createTopic.js}"></script>
 </head>
 <body th:style="${'background-image:url(/images/forumBack.jpg); background-attachment: fixed;'}">
 
@@ -39,7 +40,28 @@
     <div class="topic_body">
         <h3 style="font-family: Arial"><b>Forum</b></h3>
         <hr>
+
+        <div class="create-topic" sec:authorize="hasRole('ADMIN')">
+            <form method="post" th:object="${newSection}">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+
+                <h4>Create section </h4>
+                <textarea class="create-topic" rows="1" th:field="*{name}" placeholder="What is a general theme?"></textarea>
+                <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+                <div class="hor-center">
+                    <button class="btn create-btn" id="create-btn">Create</button>
+                </div>
+            </form>
+        </div>
+        <hr sec:authorize="hasRole('ADMIN')">
+
         <div class="noContent" th:if="${#lists.isEmpty(sections)}">No content</div>
+
+        <div th:each="section: ${sections}">
+            <a class="topic-link" th:href="@{/{sec_name}(sec_name=${section.name})}" th:text="${section.name}"></a>
+            <hr>
+        </div>
     </div>
 </section>
 

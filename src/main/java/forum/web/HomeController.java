@@ -10,9 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -48,8 +49,22 @@ public class HomeController {
         Pageable pageable = PageRequest.of(page, pageSize);
         List<Section> sections = secRepo.findAll(pageable);
         model.addAttribute("sections", sections);
+        model.addAttribute("newSection", new Section());
 
         return "index";
     }
 
+    @PostMapping
+    public String createSection(@Valid @ModelAttribute("newSection") Section section,
+                                BindingResult errors)
+    {
+        if (errors.hasErrors())
+        {
+            return "index";
+        }
+
+        secRepo.save(section);
+
+        return "redirect:/";
+    }
 }

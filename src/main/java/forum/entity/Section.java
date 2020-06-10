@@ -15,11 +15,11 @@ import javax.validation.constraints.Size;
 public class Section {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @NotBlank
-    @Size(min=1, max=100, message = "Comment must be between 1 and 100 length long")
+    @Size(min=1, max=100, message = "Section name must be between 1 and 100 length long")
     String name;
 
 }

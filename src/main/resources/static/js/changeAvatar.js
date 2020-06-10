@@ -2,7 +2,7 @@ window.onload = function()
 {
     let input = document.querySelector('.inputfile');
     addAvatarInputListener(input);
-}
+};
 
 function addAvatarInputListener(input){
     input.addEventListener('change', function(e){
