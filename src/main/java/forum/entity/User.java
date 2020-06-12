@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -57,6 +58,12 @@ public class User implements UserDetails {
     {
         if (avatar == null) return "";
         else return "data:image;base64," + new String(avatar);
+    }
+
+    public String getRegDate()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(registrationDate);
     }
 
     @PrePersist

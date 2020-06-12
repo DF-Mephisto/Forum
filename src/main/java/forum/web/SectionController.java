@@ -104,7 +104,7 @@ public class SectionController {
         comment.setUser(user);
         comRepo.save(comment);
 
-        String redirectUrl = "section/" + id + "?page=" + page;
+        String redirectUrl = "topic/" + topic.getId() + "?page=" + page;
         return "redirect:/" + redirectUrl;
     }
 }

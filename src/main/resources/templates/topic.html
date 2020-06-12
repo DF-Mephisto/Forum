@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Forum</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/controls.css}">
+    <link rel="stylesheet" th:href="@{/css/forum.css}">
+    <link rel="stylesheet" th:href="@{/css/topic.css}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script th:src="@{/js/topic.js}"></script>
+    <script th:src="@{/js/createTopic.js}"></script>
+</head>
+<body th:style="${'background-image:url(/images/forumBack.jpg); background-attachment: fixed;'}">
+
+<ul class="liref">
+    <li><a href="/">Main</a></li>
+
+    <div class="log">
+        <li sec:authorize="!isAuthenticated()"><a href="/login">Sign in</a></li>
+
+        <li sec:authorize="isAuthenticated()">
+            <button class="dropdown">
+                <img th:if="${userImg != ''}" th:src="${userImg}" alt="avatar" />
+                <img th:unless="${userImg != ''}" src="/images/baseAva.png" alt="avatar" />
+                <i class="fa fa-caret-down"></i>
+
+                <form class="dropdown-content" method="post" th:action="@{/logout}">
+                    <a class="dropdown-link" th:href="@{/profile/{username}(username=${#authentication.getName()})}">Profile</a>
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                    <input class="logout_btn" type="submit" value="Logout">
+                </form>
+            </button>
+        </li>
+    </div>
+</ul>
+
+<section class="main_frame">
+    <div class="topic_body">
+        <h3 class="title" th:text="${topic.name}"></h3>
+        <hr>
+
+        <article class="post" th:each="comment: ${comments}" th:with="user=${comment.user}">
+            <div class="user-block">
+                <div class="user-main-info">
+                    <a class="nickname user-name" th:if="${user.role == 'ROLE_USER'}" th:href="@{/profile/{username}(username=${user.username})}" th:text="${user.username}"></a>
+                    <a class="nickname admin-name" th:if="${user.role == 'ROLE_ADMIN'}" th:href="@{/profile/{username}(username=${user.username})}" th:text="${user.username}"></a>
+
+                    <img class="avatar" onload="resizeAva(this)" th:if="${user.getImageStr() != ''}" th:src="${user.getImageStr()}" alt="avatar" />
+                    <img class="avatar" onload="resizeAva(this)" th:unless="${user.getImageStr() != ''}" src="/images/baseAva.png" alt="avatar" />
+                </div>
+                <div class="user-add-info">
+                    <div th:if="${user.role == 'ROLE_USER'}">User</div>
+                    <div th:if="${user.role == 'ROLE_ADMIN'}">Administrator</div>
+                    <div>Posted at:</div>
+                    <div th:text="${comment.getDate()}"></div>
+                </div>
+            </div>
+
+            <div class="comment-block" th:text="${comment.text}"></div>
+            <br>
+            <hr>
+        </article>
+        <script>
+            tuneCommentBlocks();
+        </script>
+
+        <div class="create-topic" sec:authorize="isAuthenticated()">
+            <form method="post" th:object="${newComment}">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+
+                <textarea class="create-topic-input" rows="5" th:field="*{text}" placeholder="Put your comment here"></textarea>
+                <span class="error" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></span>
+
+                <div class="hor-center">
+                    <button class="btn-dis" id="create-btn">Post</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</section>
+
+<script>
+    vscroll();
+</script>
+
+</body>
+</html>

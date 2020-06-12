@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/profile/edit").authenticated()
                 .antMatchers("/", "/**").permitAll()
                 .and().formLogin().loginPage("/login")
-                .and().logout().logoutSuccessUrl("/");
+                .and().logout().logoutSuccessUrl("/")
+                .and().rememberMe().key("uniqueAndSecret");
     }
 }

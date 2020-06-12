@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
@@ -35,8 +36,14 @@ public class Comment {
     @JoinColumn(name = "user_id")
     User user;
 
+    public String getDate()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return sdf.format(placedAt);
+    }
+
     @PrePersist
-    public void createdAt()
+    public void postedAt()
     {
         this.placedAt = new Date();
     }

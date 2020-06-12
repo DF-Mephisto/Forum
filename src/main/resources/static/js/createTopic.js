@@ -7,11 +7,11 @@ window.onload = function() {
 
     for (let i = 0; i < inputs.length; i++)
     {
-        addInpEvents(inputs[i]);
+        addInpEvents(inputs[i], inputs[i].rows);
     }
 };
 
-function addInpEvents(input) {
+function addInpEvents(input, rows) {
     input.onfocus = function() {
         input.style.backgroundColor = "rgba(37,18,0,0.6)";
         document.getElementById("create-btn").style.display = 'block';
@@ -23,7 +23,11 @@ function addInpEvents(input) {
     });
 
     input.addEventListener('input', function(){
-        input.rows = input.value.toString().lineCount();
+        let lineCount = input.value.toString().lineCount();
+        if (lineCount >= rows)
+            input.rows = lineCount;
+        else
+            input.rows = rows;
 
         let inputs = document.getElementsByClassName("create-topic-input");
 
