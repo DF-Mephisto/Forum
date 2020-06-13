@@ -26,6 +26,19 @@ public class Section {
     @Column(name="placedat")
     Date placedAt;
 
+    @Transient
+    SectionSummary sum = new SectionSummary();
+
+    @Data
+    public class SectionSummary {
+        String lastPostUsername;
+        String lastPostUserrole;
+        String lastPostTopicName;
+        Long lastPostTopicId;
+        Long totalTopics;
+        Long totalComments;
+    }
+
     @PrePersist
     public void createdAt()
     {

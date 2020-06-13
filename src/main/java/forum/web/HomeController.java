@@ -39,6 +39,23 @@ public class HomeController {
         Pageable pageable = PageRequest.of(page, props.getTopicsCount(),
                 Sort.by(Sort.Direction.ASC, "placedAt"));
         List<Section> sections = secRepo.findAll(pageable);
+
+        sections.forEach(s -> {
+            Long id = s.getId();
+            SectionRepository.lastPost lastPost = secRepo.findLastPost(id);
+
+            Section.SectionSummary sum = s.getSum();
+            if (lastPost != null)
+            {
+                sum.setLastPostTopicId(lastPost.getTopicid());
+                sum.setLastPostTopicName(lastPost.getTopicName());
+                sum.setLastPostUsername(lastPost.getUsername());
+                sum.setLastPostUserrole(lastPost.getUserRole());
+            }
+
+            sum.setTotalTopics(secRepo.countTopics(id));
+            sum.setTotalComments(secRepo.countComments(id));
+        });
         model.addAttribute("sections", sections);
 
         String userImg = user == null ? "" : user.getImageStr();

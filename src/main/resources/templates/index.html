@@ -8,9 +8,11 @@
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/forum.css}">
     <link rel="stylesheet" th:href="@{/css/controls.css}">
+    <link rel="stylesheet" th:href="@{/css/userRole.css}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script th:src="@{/js/createTopic.js}"></script>
+    <script th:src="@{/js/formatText.js}"></script>
 </head>
 <body th:style="${'background-image:url(/images/forumBack.jpg); background-attachment: fixed;'}">
 
@@ -59,11 +61,35 @@
         <div class="noContent" th:if="${#lists.isEmpty(sections)}">No content</div>
 
         <div th:each="section: ${sections}">
-            <a class="topic-link" th:href="@{/section/{id}(id=${section.id})}" th:text="${section.name}"></a>
-            <hr>
+            <div class="link-block">
+                <a class="topic-link" th:href="@{/section/{id}(id=${section.id})}" th:text="${section.name}"></a>
+                <br>
+
+                <div th:if="${section.sum.totalComments > 0}" class="last-comment">
+                    Last comment in
+                    <a class="last-comment-link" th:href="@{/topic/{id}(id=${section.sum.lastPostTopicId})}" th:text="${section.sum.lastPostTopicName}"></a>
+                    from
+                    <a class="nickname user-name" th:if="${section.sum.lastPostUserrole == 'ROLE_USER'}" th:href="@{/profile/{name}(name=${section.sum.lastPostUsername})}" th:text="${section.sum.lastPostUsername}"></a>
+                    <a class="nickname admin-name" th:if="${section.sum.lastPostUserrole == 'ROLE_ADMIN'}" th:href="@{/profile/{name}(name=${section.sum.lastPostUsername})}" th:text="${section.sum.lastPostUsername}"></a>
+
+                </div>
+            </div>
+
+            <div class="sum-block">
+                total topics:
+                <span th:text="${section.sum.totalTopics}"></span>
+                <br>
+                total comments:
+                <span th:text="${section.sum.totalComments}"></span>
+            </div>
+            <br class="sec-br">
+            <hr class="sec-hr">
         </div>
     </div>
 </section>
 
+<script>
+    formatText();
+</script>
 </body>
 </html>

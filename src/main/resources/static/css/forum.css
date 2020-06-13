@@ -18,6 +18,7 @@
     width: 80%;
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.8);
+    font-family: Arial;
     color: white;
 }
 
@@ -27,7 +28,6 @@
 
 .noContent {
     font-size: 20px;
-    font-family: Arial;
 }
 
 .create-topic {
@@ -62,4 +62,36 @@
 .topic-link:hover {
     color: yellow;
     text-shadow: 0px 0px 4px yellow;
+}
+
+.link-block {
+    width: 80%;
+    float: left;
+    overflow: hidden;
+    overflow-wrap: break-word;
+}
+
+.last-comment-link {
+    color: white;
+}
+
+.last-comment {
+    font-size: 12px;
+    color: gray;
+}
+
+.sum-block {
+    width: 20%;
+    float: left;
+    text-align: right;
+    overflow: hidden;
+    overflow-wrap: break-word;
+}
+
+.sec-hr {
+    clear: left;
+}
+
+.sec-br {
+    clear: left;
 }
