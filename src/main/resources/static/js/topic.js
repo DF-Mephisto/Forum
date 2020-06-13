@@ -14,9 +14,8 @@ function tuneCommentBlocks() {
         {
             cBlocks[i].style.height  = uBlocks[i].clientHeight.toString() + 'px' ;
         }
-
     }
-};
+}
 
 function vscroll()
 {

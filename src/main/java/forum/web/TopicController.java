@@ -55,6 +55,9 @@ public class TopicController {
         if (topicRes.isEmpty()) return "redirect:/";
 
         Topic topic = topicRes.get();
+        topic.setViews(topic.getViews() + 1);
+        topicRepo.save(topic);
+
         List<Comment> comments = comRepo.findByTopic_Id(id, pageable);
 
         model.addAttribute("topic", topic);

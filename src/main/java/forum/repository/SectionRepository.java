@@ -46,4 +46,5 @@ public interface SectionRepository extends CrudRepository<Section, Long> {
         String getTopicName();
         Long getTopicid();
     }
+
 }

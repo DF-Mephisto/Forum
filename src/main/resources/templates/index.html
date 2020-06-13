@@ -71,7 +71,6 @@
                     from
                     <a class="nickname user-name" th:if="${section.sum.lastPostUserrole == 'ROLE_USER'}" th:href="@{/profile/{name}(name=${section.sum.lastPostUsername})}" th:text="${section.sum.lastPostUsername}"></a>
                     <a class="nickname admin-name" th:if="${section.sum.lastPostUserrole == 'ROLE_ADMIN'}" th:href="@{/profile/{name}(name=${section.sum.lastPostUsername})}" th:text="${section.sum.lastPostUsername}"></a>
-
                 </div>
             </div>
 

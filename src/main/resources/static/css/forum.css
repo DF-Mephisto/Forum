@@ -5,6 +5,8 @@
 .title {
     font-family: Arial;
     font-weight: bold;
+    overflow: hidden;
+    overflow-wrap: break-word;
 }
 
 .main_frame {

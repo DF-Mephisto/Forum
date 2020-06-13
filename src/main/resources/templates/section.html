@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/forum.css}">
     <link rel="stylesheet" th:href="@{/css/controls.css}">
+    <link rel="stylesheet" th:href="@{/css/userRole.css}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script th:src="@{/js/createTopic.js}"></script>
@@ -62,8 +63,28 @@
         <div class="noContent" th:if="${#lists.isEmpty(topics)}">No content</div>
 
         <div th:each="topic: ${topics}">
-            <a class="topic-link" th:href="@{/topic/{id}(id=${topic.id})}" th:text="${topic.name}"></a>
-            <hr>
+            <div class="link-block">
+                <a class="topic-link" th:href="@{/topic/{id}(id=${topic.id})}" th:text="${topic.name}"></a>
+                <br>
+
+                <div th:if="${topic.sum.totalPosts > 0}" class="last-comment">
+                    Last comment from
+                    <a class="nickname user-name" th:if="${topic.sum.lastPostUser.role == 'ROLE_USER'}" th:href="@{/profile/{name}(name=${topic.sum.lastPostUser.username})}" th:text="${topic.sum.lastPostUser.username}"></a>
+                    <a class="nickname admin-name" th:if="${topic.sum.lastPostUser.role == 'ROLE_ADMIN'}" th:href="@{/profile/{name}(name=${topic.sum.lastPostUser.username})}" th:text="${topic.sum.lastPostUser.username}"></a>
+                    at
+                    <span th:text="${topic.sum.lastPostComment.getDate()}"></span>
+                </div>
+            </div>
+
+            <div class="sum-block">
+                total comments:
+                <span th:text="${topic.sum.totalPosts}"></span>
+                <br>
+                total views:
+                <span th:text="${topic.views}"></span>
+            </div>
+            <br class="sec-br">
+            <hr class="sec-hr">
         </div>
     </div>
 </section>

@@ -30,6 +30,18 @@ public class Topic {
     @JoinColumn(name = "section_id")
     Section section;
 
+    Long views;
+
+    @Transient
+    TopicSummary sum = new TopicSummary();
+
+    @Data
+    public class TopicSummary {
+        User lastPostUser;
+        Comment lastPostComment;
+        Long totalPosts;
+    }
+
     @PrePersist
     public void createdAt()
     {

@@ -7,6 +7,7 @@ import forum.entity.User;
 import forum.forms.CreateTopicForm;
 import forum.repository.CommentRepository;
 import forum.repository.TopicRepository;
+import forum.repository.UserRepository;
 import forum.service.Properties;
 import forum.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +31,20 @@ public class SectionController {
     private SectionRepository secRepo;
     private TopicRepository topicRepo;
     private CommentRepository comRepo;
+    private UserRepository userRepo;
     private Properties props;
 
     @Autowired
     public SectionController(SectionRepository secRepo,
                              TopicRepository topicRepo,
                              CommentRepository comRepo,
+                             UserRepository userRepo,
                              Properties props)
     {
         this.secRepo = secRepo;
         this.topicRepo = topicRepo;
         this.comRepo = comRepo;
+        this.userRepo = userRepo;
         this.props = props;
     }
 
@@ -63,6 +67,7 @@ public class SectionController {
 
         Section section = secRes.get();
         List<Topic> topics = topicRepo.findBySection_Id(id, pageable);
+        fillTopicsSummary(topics);
 
         model.addAttribute("section", section);
         model.addAttribute("topics", topics);
@@ -88,6 +93,7 @@ public class SectionController {
             Pageable pageable = PageRequest.of(page, props.getTopicsCount(),
                     Sort.by(Sort.Direction.ASC, "placedAt"));
             List<Topic> topics = topicRepo.findBySection_Id(id, pageable);
+            fillTopicsSummary(topics);
             model.addAttribute("section", section);
             model.addAttribute("topics", topics);
             return "section";
@@ -106,5 +112,22 @@ public class SectionController {
 
         String redirectUrl = "topic/" + topic.getId() + "?page=" + page;
         return "redirect:/" + redirectUrl;
+    }
+
+    private void fillTopicsSummary(List<Topic> topics)
+    {
+        topics.forEach(t -> {
+            Long topicId = t.getId();
+            TopicRepository.lastPost lastPost = topicRepo.findLastPost(topicId);
+
+            Topic.TopicSummary sum = t.getSum();
+            if (lastPost != null)
+            {
+                sum.setLastPostUser(userRepo.findById(lastPost.getUserId()).orElseGet(null));
+                sum.setLastPostComment(comRepo.findById(lastPost.getCommentId()).orElseGet(null));
+            }
+
+            sum.setTotalPosts(comRepo.countByTopic_Id(topicId));
+        });
     }
 }
