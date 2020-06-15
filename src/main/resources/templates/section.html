@@ -9,9 +9,11 @@
     <link rel="stylesheet" th:href="@{/css/forum.css}">
     <link rel="stylesheet" th:href="@{/css/controls.css}">
     <link rel="stylesheet" th:href="@{/css/userRole.css}">
+    <link rel="stylesheet" th:href="@{/css/pages.css}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script th:src="@{/js/createTopic.js}"></script>
+    <script th:src="@{/js/drawPages.js}"></script>
 </head>
 <body th:style="${'background-image:url(/images/forumBack.jpg); background-attachment: fixed;'}">
 
@@ -86,6 +88,15 @@
             <br class="sec-br">
             <hr class="sec-hr">
         </div>
+
+        <br>
+        <footer class="pages" id="pages" ></footer>
+        <script th:inline="javascript">
+            let cur = /*[[${currentPage}]]*/ 0;
+            let count = /*[[${pageCount}]]*/ 0;
+            let url  = /*[['/section/' + ${section.id}]]*/ "";
+            drawPages(cur, count, url);
+        </script>
     </div>
 </section>
 

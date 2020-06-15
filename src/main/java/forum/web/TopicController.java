@@ -60,6 +60,10 @@ public class TopicController {
 
         List<Comment> comments = comRepo.findByTopic_Id(id, pageable);
 
+        long pageCount = (long)Math.ceil((double) comRepo.countByTopic_Id(id) / (double)props.getCommentsCount());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageCount", pageCount);
+
         model.addAttribute("topic", topic);
         model.addAttribute("comments", comments);
         model.addAttribute("newComment", new Comment());

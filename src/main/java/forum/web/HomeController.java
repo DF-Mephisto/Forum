@@ -60,6 +60,10 @@ public class HomeController {
 
         String userImg = user == null ? "" : user.getImageStr();
         model.addAttribute("userImg", userImg);
+
+        long pageCount = (long)Math.ceil((double)secRepo.count() / (double)props.getTopicsCount());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageCount", pageCount);
     }
 
     @GetMapping

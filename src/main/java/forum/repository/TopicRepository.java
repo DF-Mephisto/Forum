@@ -12,6 +12,7 @@ import java.util.List;
 public interface TopicRepository extends CrudRepository<Topic, Long> {
 
     List<Topic> findBySection_Id(Long id, Pageable pageable);
+    Long countBySection_Id(Long id);
 
     @Query(value = "SELECT u.id AS userId, c.id AS commentId " +
                     "FROM topic t " +

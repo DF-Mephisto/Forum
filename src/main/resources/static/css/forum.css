@@ -13,7 +13,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px;
+    margin: 70px 20px 20px 20px;
 }
 
 .topic_body {
@@ -74,7 +74,9 @@
 }
 
 .last-comment-link {
-    color: white;
+    color: #c1c1c1;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .last-comment {

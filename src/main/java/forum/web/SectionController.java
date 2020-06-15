@@ -69,6 +69,10 @@ public class SectionController {
         List<Topic> topics = topicRepo.findBySection_Id(id, pageable);
         fillTopicsSummary(topics);
 
+        long pageCount = (long)Math.ceil((double) topicRepo.countBySection_Id(id) / (double)props.getTopicsCount());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageCount", pageCount);
+
         model.addAttribute("section", section);
         model.addAttribute("topics", topics);
         model.addAttribute("newTopic", new CreateTopicForm());
@@ -102,6 +106,7 @@ public class SectionController {
         Topic topic = new Topic();
         topic.setName(form.getName());
         topic.setSection(section);
+        topic.setViews((long)0);
         topicRepo.save(topic);
 
         Comment comment = new Comment();

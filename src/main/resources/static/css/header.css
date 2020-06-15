@@ -6,7 +6,9 @@
     height: 50px;
     display: flex;
     justify-content: center;
-    position: relative;
+    position: fixed;
+    width: 100%;
+    top: 0px;
 }
 
 .liref li {

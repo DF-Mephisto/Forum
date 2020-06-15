@@ -1,0 +1,21 @@
+.pages {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.page-btn {
+    padding: 10px;
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+}
+
+.page-btn:hover {
+    color: yellow;
+    cursor: pointer;
+}
+
+.page-btn-sel {
+    color: black;
+    background-color: yellow;
+}
