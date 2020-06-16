@@ -61,13 +61,12 @@ public class SectionController {
                                  @RequestParam(value = "page", defaultValue = "0") int page,
                                  Model model)
     {
-        Pageable pageable = PageRequest.of(page, props.getTopicsCount(),
-                                           Sort.by(Sort.Direction.DESC, "placedAt"));
+        Pageable pageable = PageRequest.of(page, props.getTopicsCount());
         Optional<Section> secRes = secRepo.findById(id);
         if (secRes.isEmpty()) return "redirect:/";
 
         Section section = secRes.get();
-        List<Topic> topics = topicRepo.findBySection_Id(id, pageable);
+        List<Topic> topics = topicRepo.findBySection_Id(id, pageable).getContent();
         fillTopicsSummary(topics);
 
         long pageCount = (long)Math.ceil((double) topicRepo.countBySection_Id(id) / (double)props.getTopicsCount());
@@ -95,9 +94,8 @@ public class SectionController {
 
         if (errors.hasErrors())
         {
-            Pageable pageable = PageRequest.of(page, props.getTopicsCount(),
-                    Sort.by(Sort.Direction.ASC, "placedAt"));
-            List<Topic> topics = topicRepo.findBySection_Id(id, pageable);
+            Pageable pageable = PageRequest.of(page, props.getTopicsCount());
+            List<Topic> topics = topicRepo.findBySection_Id(id, pageable).getContent();
             fillTopicsSummary(topics);
             model.addAttribute("section", section);
             model.addAttribute("topics", topics);
