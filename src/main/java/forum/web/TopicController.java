@@ -94,8 +94,8 @@ public class TopicController {
             return "topic";
         }
 
-        comment.setTopic(topic);
         comment.setUser(user);
+        comment.setTopic(topic);
         comRepo.save(comment);
 
         String redirectUrl = "topic/" + id + "?page=" + page + "&vscroll=true";

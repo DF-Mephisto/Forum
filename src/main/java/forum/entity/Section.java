@@ -7,7 +7,9 @@ import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -16,7 +18,7 @@ import java.util.Date;
 public class Section {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
     @NotBlank(message = "Can't be empty")
@@ -25,6 +27,9 @@ public class Section {
 
     @Column(name="placedat")
     Date placedAt;
+
+    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Topic> topics = new ArrayList<>();
 
     @Transient
     SectionSummary sum = new SectionSummary();
