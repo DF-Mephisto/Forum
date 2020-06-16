@@ -20,7 +20,12 @@
     border-left: 1px solid white;
     font-family: Arial, "Times New Roman";
     overflow-wrap: break-word;
+    position: relative;
+}
+
+.comment-text {
     white-space: pre-wrap;
+    margin-bottom: 40px;
 }
 
 .user-main-info {
