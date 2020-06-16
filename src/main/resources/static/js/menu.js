@@ -1,4 +1,4 @@
-const removeComment = function(id) {
+const removeItem = function(type, id) {
 
     let token = $("meta[name='_csrf']").attr("content");
     let header = $("meta[name='_csrf_header']").attr("content");
@@ -7,12 +7,12 @@ const removeComment = function(id) {
 
     $.ajax({
         type: 'DELETE',
-        url: '/comment/' + id,
+        url: '/' + type + '/' + id,
         async: true,
         headers: headers,
         success: function() {
-            let comment = document.getElementById("com" + id);
-            comment.parentElement.removeChild(comment);
+            let item = document.getElementById("item" + id);
+            item.parentElement.removeChild(item);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status + ' ' + jqXHR.responseText);

@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Forum</title>
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/forum.css}">
@@ -14,6 +16,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script th:src="@{/js/createTopic.js}"></script>
     <script th:src="@{/js/drawPages.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body th:style="${'background-image:url(/images/forumBack.jpg); background-attachment: fixed;'}">
 
@@ -64,7 +68,7 @@
 
         <div class="noContent" th:if="${#lists.isEmpty(topics)}">No content</div>
 
-        <div th:each="topic: ${topics}">
+        <div th:id="'item' + ${topic.id}" th:each="topic: ${topics}">
             <div class="link-block">
                 <a class="topic-link" th:href="@{/topic/{id}(id=${topic.id})}" th:text="${topic.name}"></a>
                 <br>
@@ -84,6 +88,8 @@
                 <br>
                 total views:
                 <span th:text="${topic.views}"></span>
+                <br>
+                <button th:if="${#authorization.expression('hasRole(''ADMIN'')')}" class="btn topic-menu-btn" th:onclick="'removeItem(\'topic\', ' + ${topic.id} + ')'">Remove</button>
             </div>
             <br class="sec-br">
             <hr class="sec-hr">

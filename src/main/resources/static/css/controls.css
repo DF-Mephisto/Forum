@@ -31,8 +31,13 @@
     align-items: center;
 }
 
-.menu-btn {
+.comment-menu-btn {
     position: absolute;
     bottom: 10px;
     right: 10px;
+}
+
+.topic-menu-btn {
+    float: right;
+    margin: 10px;
 }

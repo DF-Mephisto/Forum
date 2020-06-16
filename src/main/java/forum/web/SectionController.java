@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -117,6 +118,14 @@ public class SectionController {
 
         String redirectUrl = "topic/" + topic.getId() + "?page=" + page;
         return "redirect:/" + redirectUrl;
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void deleteSection(@PathVariable("id") Long id)
+    {
+        secRepo.deleteById(id);
     }
 
     private void fillTopicsSummary(List<Topic> topics)

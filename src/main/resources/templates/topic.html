@@ -50,7 +50,7 @@
         <h3 class="title" th:text="${topic.name}"></h3>
         <hr>
 
-        <article th:id="'com' + ${comment.id}" class="post" th:each="comment: ${comments}" th:with="user=${comment.user}">
+        <article th:id="'item' + ${comment.id}" class="post" th:each="comment: ${comments}" th:with="user=${comment.user}">
             <div class="user-block">
                 <div class="user-main-info">
                     <a class="nickname user-name" th:if="${user.role == 'ROLE_USER'}" th:href="@{/profile/{username}(username=${user.username})}" th:text="${user.username}"></a>
@@ -69,7 +69,7 @@
 
             <div class="comment-block">
                 <div class="comment-text" th:text="${comment.text}"></div>
-                <button th:if="${#authorization.expression('hasRole(''ADMIN'')')} or (${#authorization.expression('isAuthenticated()')} and ${comment.user.id} == ${#authentication.getPrincipal().getId()})" class="btn menu-btn" th:onclick="'removeComment(' + ${comment.id} + ')'">Remove</button>
+                <button th:if="${#authorization.expression('hasRole(''ADMIN'')')} or (${#authorization.expression('isAuthenticated()')} and ${comment.user.id} == ${#authentication.getPrincipal().getId()})" class="btn comment-menu-btn" th:onclick="'removeItem(\'comment\', ' + ${comment.id} + ')'">Remove</button>
             </div>
             <br>
             <hr>

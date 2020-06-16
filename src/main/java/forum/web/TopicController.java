@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -99,5 +100,13 @@ public class TopicController {
 
         String redirectUrl = "topic/" + id + "?page=" + page + "&vscroll=true";
         return "redirect:/" + redirectUrl;
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void deleteTopic(@PathVariable("id") Long id)
+    {
+        topicRepo.deleteById(id);
     }
 }

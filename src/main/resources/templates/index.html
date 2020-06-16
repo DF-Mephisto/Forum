@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Forum</title>
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/forum.css}">
@@ -15,6 +17,8 @@
     <script th:src="@{/js/createTopic.js}"></script>
     <script th:src="@{/js/formatText.js}"></script>
     <script th:src="@{/js/drawPages.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body th:style="${'background-image:url(/images/forumBack.jpg); background-attachment: fixed;'}">
 
@@ -62,7 +66,7 @@
 
         <div class="noContent" th:if="${#lists.isEmpty(sections)}">No content</div>
 
-        <div th:each="section: ${sections}">
+        <div th:id="'item' + ${section.id}" th:each="section: ${sections}">
             <div class="link-block">
                 <a class="topic-link" th:href="@{/section/{id}(id=${section.id})}" th:text="${section.name}"></a>
                 <br>
@@ -82,6 +86,8 @@
                 <br>
                 total comments:
                 <span th:text="${section.sum.totalComments}"></span>
+                <br>
+                <button th:if="${#authorization.expression('hasRole(''ADMIN'')')}" class="btn topic-menu-btn" th:onclick="'removeItem(\'section\', ' + ${section.id} + ')'">Remove</button>
             </div>
             <br class="sec-br">
             <hr class="sec-hr">
