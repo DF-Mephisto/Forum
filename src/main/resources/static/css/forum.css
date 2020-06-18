@@ -99,3 +99,23 @@
 .sec-br {
     clear: left;
 }
+
+.prev-link-block {
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.prev-link {
+    color: #c7c700;
+    text-decoration: none;
+    transition: 1s;
+}
+
+.prev-link:hover {
+    color: yellow;
+    text-shadow: 0px 0px 4px yellow;
+}
+
+.check-length {
+
+}

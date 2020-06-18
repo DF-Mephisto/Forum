@@ -16,13 +16,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script th:src="@{/js/createTopic.js}"></script>
     <script th:src="@{/js/drawPages.js}"></script>
+    <script th:src="@{/js/formatText.js}"></script>
     <script th:src="@{/js/menu.js}"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body th:style="${'background-image:url(/images/forumBack.jpg); background-attachment: fixed;'}">
 
 <ul class="liref">
-    <li><a href="/">Main</a></li>
+    <li><a href="/">Forum</a></li>
 
     <div class="log">
         <li sec:authorize="!isAuthenticated()"><a href="/login">Sign in</a></li>
@@ -46,6 +47,11 @@
 <section class="main_frame">
     <div class="topic_body">
         <h3 class="title" th:text="${section.name}"></h3>
+        <div class="prev-link-block">
+            <a class="prev-link" href="/">Forum</a>
+            <span> > </span>
+            <span class="check-length" th:text="${section.name}"></span>
+        </div>
         <hr>
 
         <div class="create-topic" sec:authorize="isAuthenticated()">
@@ -105,6 +111,10 @@
         </script>
     </div>
 </section>
+
+<script>
+    formatText();
+</script>
 
 </body>
 </html>

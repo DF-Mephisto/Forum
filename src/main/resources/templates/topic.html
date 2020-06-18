@@ -18,13 +18,14 @@
     <script th:src="@{/js/topic.js}"></script>
     <script th:src="@{/js/createTopic.js}"></script>
     <script th:src="@{/js/drawPages.js}"></script>
+    <script th:src="@{/js/formatText.js}"></script>
     <script th:src="@{/js/menu.js}"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body th:style="${'background-image:url(/images/forumBack.jpg); background-attachment: fixed;'}">
 
 <ul class="liref">
-    <li><a href="/">Main</a></li>
+    <li><a href="/">Forum</a></li>
 
     <div class="log">
         <li sec:authorize="!isAuthenticated()"><a href="/login">Sign in</a></li>
@@ -48,6 +49,13 @@
 <section class="main_frame">
     <div class="topic_body">
         <h3 class="title" th:text="${topic.name}"></h3>
+        <div class="prev-link-block">
+            <a class="prev-link" href="/">Forum</a>
+            <span> > </span>
+            <a class="prev-link check-length" th:href="@{/section/{id}(id=${topic.section.id})}" th:text="${topic.section.name}"></a>
+            <span> > </span>
+            <span class="check-length" th:text="${topic.name}"></span>
+        </div>
         <hr>
 
         <article th:id="'item' + ${comment.id}" class="post" th:each="comment: ${comments}" th:with="user=${comment.user}">
@@ -104,6 +112,7 @@
 
 <script>
     vscroll();
+    formatText();
 </script>
 
 </body>

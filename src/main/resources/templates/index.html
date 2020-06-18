@@ -23,7 +23,7 @@
 <body th:style="${'background-image:url(/images/forumBack.jpg); background-attachment: fixed;'}">
 
 <ul class="liref">
-    <li><a href="/">Main</a></li>
+    <li><a href="/">Forum</a></li>
 
     <div class="log">
         <li sec:authorize="!isAuthenticated()"><a href="/login">Sign in</a></li>
@@ -73,7 +73,7 @@
 
                 <div th:if="${section.sum.totalComments > 0}" class="last-comment">
                     Last comment in
-                    <a class="last-comment-link" th:href="@{/topic/{id}(id=${section.sum.lastPostTopicId})}" th:text="${section.sum.lastPostTopicName}"></a>
+                    <a class="last-comment-link check-length" th:href="@{/topic/{id}(id=${section.sum.lastPostTopicId})}" th:text="${section.sum.lastPostTopicName}"></a>
                     from
                     <a class="nickname user-name" th:if="${section.sum.lastPostUserrole == 'ROLE_USER'}" th:href="@{/profile/{name}(name=${section.sum.lastPostUsername})}" th:text="${section.sum.lastPostUsername}"></a>
                     <a class="nickname admin-name" th:if="${section.sum.lastPostUserrole == 'ROLE_ADMIN'}" th:href="@{/profile/{name}(name=${section.sum.lastPostUsername})}" th:text="${section.sum.lastPostUsername}"></a>

@@ -1,6 +1,6 @@
 let formatText = function()
 {
-    let links = document.getElementsByClassName("last-comment-link");
+    let links = document.getElementsByClassName("check-length");
 
     Array.prototype.forEach.call(links, function(link) {
         let text = link.innerHTML;
