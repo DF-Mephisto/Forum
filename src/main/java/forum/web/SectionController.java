@@ -106,7 +106,7 @@ public class SectionController {
         topic.setName(form.getName());
         topic.setSection(section);
         topic.setViews((long)0);
-        topicRepo.save(topic);
+        topic = topicRepo.save(topic);
 
         Comment comment = new Comment();
         comment.setText(form.getText());

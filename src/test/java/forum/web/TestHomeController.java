@@ -1,6 +1,5 @@
 package forum.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import forum.entity.Section;
 import forum.repository.SectionRepository;
 import forum.repository.UserRepository;
@@ -14,19 +13,14 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.ui.ExtendedModelMap;
-import org.springframework.ui.Model;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -68,8 +62,7 @@ public class TestHomeController {
     @Test
     public void testHomePage() throws Exception
     {
-        RequestBuilder request = get("/")
-                .with(csrf());
+        RequestBuilder request = get("/");
 
         mockMvc.perform(request).andExpect(status().isOk())
                 .andExpect(view().name("index"))
