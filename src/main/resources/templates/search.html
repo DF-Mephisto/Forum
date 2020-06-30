@@ -4,8 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Forum</title>
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/forum.css}">
@@ -15,10 +13,8 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script th:src="@{/js/createTopic.js}"></script>
-    <script th:src="@{/js/formatText.js}"></script>
     <script th:src="@{/js/drawPages.js}"></script>
-    <script th:src="@{/js/menu.js}"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script th:src="@{/js/formatText.js}"></script>
 </head>
 <body th:style="${'background-image:url(/images/forumBack.jpg); background-attachment: fixed;'}">
 
@@ -26,7 +22,7 @@
     <li><a href="/">Forum</a></li>
     <li>
         <form class="search-table" action="/search" method="get">
-            <input class="search" type="text" name="name" placeholder="search">
+            <input class="search" type="text" name="name" th:value="${name}" placeholder="search">
             <button class="search-btn">
                 <i class="fa fa-search"></i>
             </button>
@@ -54,48 +50,34 @@
 
 <section class="main_frame">
     <div class="topic_body">
-        <h3 class="title">Forum</h3>
+        <h3 class="title">Results:</h3>
         <hr>
 
-        <div class="create-topic" sec:authorize="hasRole('ADMIN')">
-            <form method="post" th:object="${newSection}">
-                <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+        <div class="noContent" th:if="${#lists.isEmpty(topics)}">No results</div>
 
-                <h4>Create section </h4>
-                <textarea class="create-topic-input" rows="1" th:field="*{name}" placeholder="What is a general theme?"></textarea>
-                <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-
-                <div class="hor-center">
-                    <button class="btn-dis create-btn" id="create-btn">Create</button>
-                </div>
-            </form>
-        </div>
-        <hr sec:authorize="hasRole('ADMIN')">
-
-        <div class="noContent" th:if="${#lists.isEmpty(sections)}">No content</div>
-
-        <div th:id="'item' + ${section.id}" th:each="section: ${sections}">
+        <div th:id="'item' + ${topic.id}" th:each="topic: ${topics}">
             <div class="link-block">
-                <a class="topic-link" th:href="@{/section/{id}(id=${section.id})}" th:text="${section.name}"></a>
+                <a class="topic-link" th:href="@{/topic/{id}(id=${topic.id})}" th:text="${topic.name}"></a>
                 <br>
 
-                <div th:if="${section.sum.totalComments > 0}" class="last-comment">
-                    Last comment in
-                    <a class="last-comment-link check-length" th:href="@{/topic/{id}(id=${section.sum.lastPostTopicId})}" th:text="${section.sum.lastPostTopicName}"></a>
-                    from
-                    <a class="nickname user-name" th:if="${section.sum.lastPostUserrole == 'ROLE_USER'}" th:href="@{/profile/{name}(name=${section.sum.lastPostUsername})}" th:text="${section.sum.lastPostUsername}"></a>
-                    <a class="nickname admin-name" th:if="${section.sum.lastPostUserrole == 'ROLE_ADMIN'}" th:href="@{/profile/{name}(name=${section.sum.lastPostUsername})}" th:text="${section.sum.lastPostUsername}"></a>
+                <div th:if="${topic.sum.totalPosts > 0}" class="last-comment">
+                    Section:
+                    <a class="last-comment-link check-length" th:href="@{/section/{id}(id=${topic.section.id})}" th:text="${topic.section.name}"></a>
+                    <br>
+                    Last comment from
+                    <a class="nickname user-name" th:if="${topic.sum.lastPostUser.role == 'ROLE_USER'}" th:href="@{/profile/{name}(name=${topic.sum.lastPostUser.username})}" th:text="${topic.sum.lastPostUser.username}"></a>
+                    <a class="nickname admin-name" th:if="${topic.sum.lastPostUser.role == 'ROLE_ADMIN'}" th:href="@{/profile/{name}(name=${topic.sum.lastPostUser.username})}" th:text="${topic.sum.lastPostUser.username}"></a>
+                    at
+                    <span th:text="${topic.sum.lastPostComment.getDate()}"></span>
                 </div>
             </div>
 
             <div class="sum-block">
-                total topics:
-                <span th:text="${section.sum.totalTopics}"></span>
-                <br>
                 total comments:
-                <span th:text="${section.sum.totalComments}"></span>
+                <span th:text="${topic.sum.totalPosts}"></span>
                 <br>
-                <button th:if="${#authorization.expression('hasRole(''ADMIN'')')}" class="btn topic-menu-btn" th:onclick="'removeItem(\'section\', ' + ${section.id} + ')'">Remove</button>
+                total views:
+                <span th:text="${topic.views}"></span>
             </div>
             <br class="sec-br">
             <hr class="sec-hr">
@@ -106,7 +88,9 @@
         <script th:inline="javascript">
             let cur = /*[[${currentPage}]]*/ 0;
             let count = /*[[${pageCount}]]*/ 0;
-            drawPages(cur, count, "", "/");
+            let url  = '/search';
+            let name  = /*[['&name=' + ${name}]]*/ "";
+            drawPages(cur, count, name, url);
         </script>
     </div>
 </section>
@@ -114,5 +98,6 @@
 <script>
     formatText();
 </script>
+
 </body>
 </html>

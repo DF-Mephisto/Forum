@@ -18,6 +18,14 @@
 
 <ul class="liref">
     <li><a href="/">Forum</a></li>
+    <li>
+        <form class="search-table" action="/search" method="get">
+            <input class="search" type="text" name="name" th:value="${name}" placeholder="search">
+            <button class="search-btn">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </li>
 
     <div class="log">
         <li sec:authorize="!isAuthenticated()"><a href="/login">Sign in</a></li>

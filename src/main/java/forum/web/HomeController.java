@@ -4,6 +4,7 @@ import forum.entity.Section;
 import forum.entity.User;
 import forum.repository.SectionRepository;
 import forum.service.Properties;
+import forum.service.SummaryLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,12 +24,16 @@ public class HomeController {
 
     private SectionRepository secRepo;
     private Properties props;
+    private SummaryLoader sumLoader;
 
     @Autowired
-    public HomeController(SectionRepository secRepo, Properties props)
+    public HomeController(SectionRepository secRepo,
+                          Properties props,
+                          SummaryLoader sumLoader)
     {
         this.secRepo = secRepo;
         this.props = props;
+        this.sumLoader = sumLoader;
     }
 
     @ModelAttribute
@@ -39,23 +44,8 @@ public class HomeController {
         Pageable pageable = PageRequest.of(page, props.getTopicsCount(),
                 Sort.by(Sort.Direction.ASC, "placedAt"));
         List<Section> sections = secRepo.findAll(pageable);
+        sumLoader.fillSectionSummary(sections);
 
-        sections.forEach(s -> {
-            Long id = s.getId();
-            SectionRepository.lastPost lastPost = secRepo.findLastPost(id);
-
-            Section.SectionSummary sum = s.getSum();
-            if (lastPost != null)
-            {
-                sum.setLastPostTopicId(lastPost.getTopicid());
-                sum.setLastPostTopicName(lastPost.getTopicName());
-                sum.setLastPostUsername(lastPost.getUsername());
-                sum.setLastPostUserrole(lastPost.getUserRole());
-            }
-
-            sum.setTotalTopics(secRepo.countTopics(id));
-            sum.setTotalComments(secRepo.countComments(id));
-        });
         model.addAttribute("sections", sections);
 
         String userImg = user == null ? "" : user.getImageStr();

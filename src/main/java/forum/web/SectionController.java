@@ -10,10 +10,10 @@ import forum.repository.TopicRepository;
 import forum.repository.UserRepository;
 import forum.service.Properties;
 import forum.repository.SectionRepository;
+import forum.service.SummaryLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -34,19 +34,22 @@ public class SectionController {
     private CommentRepository comRepo;
     private UserRepository userRepo;
     private Properties props;
+    private SummaryLoader sumLoader;
 
     @Autowired
     public SectionController(SectionRepository secRepo,
                              TopicRepository topicRepo,
                              CommentRepository comRepo,
                              UserRepository userRepo,
-                             Properties props)
+                             Properties props,
+                             SummaryLoader sumLoader)
     {
         this.secRepo = secRepo;
         this.topicRepo = topicRepo;
         this.comRepo = comRepo;
         this.userRepo = userRepo;
         this.props = props;
+        this.sumLoader = sumLoader;
     }
 
     @ModelAttribute(name="userImg")
@@ -67,7 +70,7 @@ public class SectionController {
 
         Section section = secRes.get();
         List<Topic> topics = topicRepo.findBySection_Id(id, pageable).getContent();
-        fillTopicsSummary(topics);
+        sumLoader.fillTopicsSummary(topics);
 
         long pageCount = (long)Math.ceil((double) topicRepo.countBySection_Id(id) / (double)props.getTopicsCount());
         model.addAttribute("currentPage", page);
@@ -96,7 +99,7 @@ public class SectionController {
         {
             Pageable pageable = PageRequest.of(page, props.getTopicsCount());
             List<Topic> topics = topicRepo.findBySection_Id(id, pageable).getContent();
-            fillTopicsSummary(topics);
+            sumLoader.fillTopicsSummary(topics);
             model.addAttribute("section", section);
             model.addAttribute("topics", topics);
             return "section";
@@ -124,22 +127,5 @@ public class SectionController {
     public void deleteSection(@PathVariable("id") Long id)
     {
         secRepo.deleteById(id);
-    }
-
-    private void fillTopicsSummary(List<Topic> topics)
-    {
-        topics.forEach(t -> {
-            Long topicId = t.getId();
-            TopicRepository.lastPost lastPost = topicRepo.findLastPost(topicId);
-
-            Topic.TopicSummary sum = t.getSum();
-            if (lastPost != null)
-            {
-                sum.setLastPostUser(userRepo.findById(lastPost.getUserId()).orElseGet(null));
-                sum.setLastPostComment(comRepo.findById(lastPost.getCommentId()).orElseGet(null));
-            }
-
-            sum.setTotalPosts(comRepo.countByTopic_Id(topicId));
-        });
     }
 }

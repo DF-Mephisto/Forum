@@ -29,6 +29,8 @@ public interface TopicRepository extends CrudRepository<Topic, Long> {
     Page<Topic> findBySection_Id(@Param("sectionId") Long sectionId, Pageable pageable);
 
     Long countBySection_Id(Long id);
+    List<Topic> findByNameIgnoreCaseContaining(String name, Pageable pageable);
+    Long countByNameIgnoreCaseContaining(String name);
 
     @Query(value = "SELECT u.id AS userId, c.id AS commentId " +
                     "FROM topic t " +

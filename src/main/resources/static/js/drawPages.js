@@ -1,4 +1,4 @@
-function drawPages(cur, count, url) {
+function drawPages(cur, count, name, url) {
 
     if (count <= 1)
     {
@@ -9,7 +9,7 @@ function drawPages(cur, count, url) {
     let minPage = document.createElement('a');
     minPage.className = "page-btn";
     minPage.innerHTML = "«";
-    minPage.setAttribute("href", url + "?page=0")
+    minPage.setAttribute("href", url + "?page=0" + name)
     document.getElementById('pages').appendChild(minPage);
 
     let start = 0;
@@ -25,7 +25,7 @@ function drawPages(cur, count, url) {
         if (cur == i) page.className += " page-btn-sel";
         page.innerHTML = i + 1;
 
-        let link = url + "?page=" + i;
+        let link = url + "?page=" + i + name;
 
         page.setAttribute("href", link);
         document.getElementById('pages').appendChild(page);
@@ -34,6 +34,6 @@ function drawPages(cur, count, url) {
     let maxPage = document.createElement('a');
     maxPage.className = "page-btn";
     maxPage.innerHTML = "»";
-    maxPage.setAttribute("href", url + "?page=" + (count - 1));
+    maxPage.setAttribute("href", url + "?page=" + (count - 1) + name);
     document.getElementById('pages').appendChild(maxPage);
 }
